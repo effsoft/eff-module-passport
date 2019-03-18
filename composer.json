@@ -1,0 +1,74 @@
+{
+  "name": "effsoft/eff-module-passport",
+  "description": "",
+  "keywords": ["effsoft","eff-module-passport"],
+  "homepage": "https://github.com/effsoft/eff-module-passport",
+  "type": "eff-module",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=7.2.0",
+    "yiisoft/yii2": "~2.0.14",
+    "ircmaxell/random-lib": "~1.2.0",
+    "hashids/hashids": "~3.0.0",
+    "effsoft/eff": "dev-master",
+    "effsoft/eff-asset-jquery": "dev-master",
+    "effsoft/eff-asset-bootstrap-bundle": "dev-master",
+    "effsoft/eff-asset-jquery-easing": "dev-master",
+    "effsoft/eff-asset-magnific-popup": "dev-master",
+    "effsoft/eff-asset-chart-js": "dev-master"
+  },
+  "require-dev": {
+
+  },
+  "config": {
+    "process-timeout": 1800,
+    "fxp-asset": {
+      "enabled": false
+    }
+  },
+  "autoload" : {
+    "psr-4" : {
+      "effsoft\\eff\\module\\passport\\" : "src/"
+    }
+  },
+  "autoload-dev" : {
+    "psr-4" : {
+      "effsoft\\eff\\module\\passport\\" : "src/"
+    }
+  },
+  "repositories": {
+    "eff-asset-chart-js":{
+      "type": "path",
+      "url": "../eff-asset-chart-js"
+    },
+    "eff-asset-jquery":{
+      "type": "path",
+      "url": "../eff-asset-jquery"
+    },
+    "eff-asset-magnific-popup":{
+      "type": "path",
+      "url": "../eff-asset-magnific-popup"
+    },
+    "eff-asset-jquery-easing":{
+      "type": "path",
+      "url": "../eff-asset-jquery-easing"
+    },
+    "eff-asset-bootstrap-bundle":{
+      "type": "path",
+      "url": "../eff-asset-bootstrap-bundle"
+    },
+    "eff":{
+      "type": "path",
+      "url": "../eff"
+    },
+    "asset-packagist":{
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    },
+    "packagist":{
+      "type": "composer",
+      "url": "https://packagist.org"
+    }
+  }
+}
