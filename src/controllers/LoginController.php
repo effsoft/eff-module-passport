@@ -4,7 +4,7 @@ namespace effsoft\eff\module\passport\controllers;
 
 use effsoft\eff\EffController;
 use effsoft\eff\module\passport\models\LoginForm;
-use effsoft\eff\module\passport\models\User;
+use effsoft\eff\module\passport\models\UserModel;
 
 class LoginController extends EffController{
 
@@ -32,36 +32,37 @@ class LoginController extends EffController{
                     'login_form' => $login_form,
                 ]);
             }
-            $user = User::findOne(['email' => $login_form->email]);
-            if (empty($user)){
+            $user_model = UserModel::findOne(['email' => $login_form->email]);
+            if (empty($user_model)){
                 $login_form->addError('request','用户名或密码错误！');
                 return $this->render('index.php',[
                     'login_form' => $login_form,
                 ]);
             }
 
-            if (!\Yii::$app->security->validatePassword($login_form->password,$user->password)){
+            if (!\Yii::$app->security->validatePassword($login_form->password,$user_model->password)){
                 $login_form->addError('request','用户名或密码错误！');
                 return $this->render('index.php',[
                     'login_form' => $login_form,
                 ]);
             }
 
-            if(empty($user->activated)){
+            if(empty($user_model->activated)){
                 $login_form->addError('request','您的帐号还未激活！');
                 return $this->render('index.php',[
                     'login_form' => $login_form,
                 ]);
             }
 
-            if($user->blocked){
+            if($user_model->blocked){
                 $login_form->addError('request','您的帐号已被禁用！');
                 return $this->render('index.php',[
                     'login_form' => $login_form,
                 ]);
             }
 
-            \Yii::$app->user->login($user, $login_form->remember ? 3600*24*30 : 0);
+            $user_model->un = '';
+            \Yii::$app->user->login($user_model, $login_form->remember ? 3600*24*30 : 0);
             return $this->goHome();
         }
 

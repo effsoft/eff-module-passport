@@ -4,7 +4,7 @@ namespace effsoft\eff\module\passport\models;
 use yii\mongodb\ActiveRecord;
 use yii\web\IdentityInterface;
 
-class User extends ActiveRecord implements IdentityInterface {
+class UserModel extends ActiveRecord implements IdentityInterface {
 
     public static function collectionName()
     {
@@ -59,7 +59,7 @@ class User extends ActiveRecord implements IdentityInterface {
         $this->activated = false;
         $this->blocked = false;
         if($this->isNewRecord){
-            $this->auth_key = \Yii::$app->security->generateRandomString();
+            $this->auth_key = \Yii::$app->getSecurity()->generateRandomString();
             return $this->insert();
         }else{
             return $this->update();

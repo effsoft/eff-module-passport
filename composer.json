@@ -16,7 +16,8 @@
     "effsoft/eff-asset-bootstrap-bundle": "dev-master",
     "effsoft/eff-asset-jquery-easing": "dev-master",
     "effsoft/eff-asset-magnific-popup": "dev-master",
-    "effsoft/eff-asset-chart-js": "dev-master"
+    "effsoft/eff-asset-chart-js": "dev-master",
+    "effsoft/eff-module-verify": "dev-master"
   },
   "require-dev": {
 
@@ -57,6 +58,10 @@
     "eff-asset-bootstrap-bundle":{
       "type": "path",
       "url": "../eff-asset-bootstrap-bundle"
+    },
+    "eff-module-verify":{
+      "type": "path",
+      "url": "../eff-module-verify"
     },
     "eff":{
       "type": "path",
