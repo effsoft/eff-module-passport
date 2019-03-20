@@ -5,7 +5,6 @@ namespace effsoft\eff\module\passport\controllers;
 use effsoft\eff\EffController;
 use effsoft\eff\module\passport\models\LoginForm;
 use effsoft\eff\module\passport\models\UserModel;
-use yii\base\Theme;
 
 class LoginController extends EffController{
 
@@ -47,6 +46,7 @@ class LoginController extends EffController{
                     'login_form' => $login_form,
                 ]);
             }
+            
             $user_model = UserModel::findOne(['email' => $login_form->email]);
             if (empty($user_model)){
                 $login_form->addError('request','用户名或密码错误！');

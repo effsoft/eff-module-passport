@@ -21,6 +21,9 @@ class UserModel extends ActiveRecord implements IdentityInterface {
 
     public static function findIdentity($id)
     {
+        if ($id === (array) $id && isset($id['$oid'])){
+            $id = $id['$oid'];
+        }
         return static::findOne($id);
     }
 
@@ -31,7 +34,7 @@ class UserModel extends ActiveRecord implements IdentityInterface {
 
     public function getId()
     {
-        return $this->_id;
+        return ($this->_id);
     }
 
     public function getAuthKey()

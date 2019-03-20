@@ -10,6 +10,7 @@ class LoginForm extends \yii\base\Model{
             [['email', 'password'], 'required'],
             ['email', 'required', 'message'=>'请填写您的邮件地址！'],
             ['email', 'email'],
+            ['email', 'trim'],
             ['email', 'string', 'max'=>50, 'tooLong' => '长度错误！'],
             ['password', 'required', 'message'=>'请填写密码！'],
             ['password', 'string', 'min' => 6, 'tooShort' => '长度错误！'],
