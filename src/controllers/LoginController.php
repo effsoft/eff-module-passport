@@ -5,6 +5,7 @@ namespace effsoft\eff\module\passport\controllers;
 use effsoft\eff\EffController;
 use effsoft\eff\module\passport\models\LoginForm;
 use effsoft\eff\module\passport\models\UserModel;
+use yii\base\Theme;
 
 class LoginController extends EffController{
 
@@ -19,6 +20,20 @@ class LoginController extends EffController{
     }
 
     function actionIndex(){
+
+        //Dynamic change theme
+
+//        $this->getView()->theme = \Yii::createObject([
+//            'class' => '\yii\base\Theme',
+//            'pathMap' => [ dirname(dirname(__DIR__)) . '/src/views' => [
+//                    dirname(dirname(dirname(__DIR__))) . '/effsoft/themes/effsoft/eff-module-passport'
+//                    ],
+//                ],
+//            'baseUrl' => '@web/themes/basic',
+//        ]);
+//        return $this->render('index.php',[
+//            'login_form' => new LoginForm(),
+//        ],'effsoft');
 
         if(!\Yii::$app->user->isGuest){
             return $this->goHome();
@@ -61,7 +76,6 @@ class LoginController extends EffController{
                 ]);
             }
 
-            $user_model->un = '';
             \Yii::$app->user->login($user_model, $login_form->remember ? 3600*24*30 : 0);
             return $this->goHome();
         }

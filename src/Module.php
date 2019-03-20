@@ -12,7 +12,6 @@ class Module extends EffModule {
         parent::init();
 
         $this->registerTranslations();
-
     }
 
     public function registerTranslations()
