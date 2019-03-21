@@ -11,8 +11,24 @@ use effsoft\eff\module\verify\enums\Protocol;
 use effsoft\eff\module\verify\enums\Type;
 use effsoft\eff\module\verify\models\VerifyModel;
 use yii\helpers\Url;
+use yii\filters\AccessControl;
 
 class RegisterController extends EffController{
+
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index','verify'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                ],
+            ]
+        ];
+    }
 
     public function actions() {
         return [

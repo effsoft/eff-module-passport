@@ -1,3 +1,4 @@
+
 <?php
 $this->context->layout = 'passport.layout.php';
 ?>

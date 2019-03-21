@@ -5,8 +5,24 @@ namespace effsoft\eff\module\passport\controllers;
 use effsoft\eff\EffController;
 use effsoft\eff\module\passport\models\LoginForm;
 use effsoft\eff\module\passport\models\UserModel;
+use yii\filters\AccessControl;
 
 class LoginController extends EffController{
+
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                ],
+            ]
+        ];
+    }
 
     public function actions() {
         return [
