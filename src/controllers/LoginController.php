@@ -63,36 +63,36 @@ class LoginController extends EffController{
                 ]);
             }
             
-            $user_model = UserModel::findOne(['email' => $login_form->email]);
-            if (empty($user_model)){
+            $user = UserModel::findOne(['email' => strtolower($login_form->email)]);
+            if (empty($user)){
                 $login_form->addError('request','用户名或密码错误！');
                 return $this->render('index.php',[
                     'login_form' => $login_form,
                 ]);
             }
 
-            if (!\Yii::$app->security->validatePassword($login_form->password,$user_model->password)){
+            if (!\Yii::$app->security->validatePassword($login_form->password,$user->password)){
                 $login_form->addError('request','用户名或密码错误！');
                 return $this->render('index.php',[
                     'login_form' => $login_form,
                 ]);
             }
 
-            if(empty($user_model->activated)){
+            if(empty($user->activated)){
                 $login_form->addError('request','您的帐号还未激活！');
                 return $this->render('index.php',[
                     'login_form' => $login_form,
                 ]);
             }
 
-            if($user_model->blocked){
+            if($user->blocked){
                 $login_form->addError('request','您的帐号已被禁用！');
                 return $this->render('index.php',[
                     'login_form' => $login_form,
                 ]);
             }
 
-            \Yii::$app->user->login($user_model, $login_form->remember ? 3600*24*30 : 0);
+            \Yii::$app->user->login($user, $login_form->remember ? 3600*24*30 : 0);
             return $this->goHome();
         }
 

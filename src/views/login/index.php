@@ -1,9 +1,8 @@
-
 <?php
 $this->context->layout = 'passport.layout.php';
 ?>
 <?php
-$this->title = Yii::t('eff-module-passport/app','login');
+$this->title = Yii::t('passport/app','login');
 ?>
 <div class="bg-gradient-primary h-100">
     <div class="container">
@@ -17,7 +16,7 @@ $this->title = Yii::t('eff-module-passport/app','login');
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4"><?=Yii::t('eff-module-passport/app','welcome_back');?></h1>
+                                        <h1 class="h4 text-gray-900 mb-4"><?=Yii::t('passport/app','welcome_back');?></h1>
                                     </div>
                                     <?php
                                     use yii\widgets\ActiveForm;
@@ -84,12 +83,12 @@ $this->title = Yii::t('eff-module-passport/app','login');
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="<?=\yii\helpers\Url::to(['/passport/password/forgot']) ?>">
-                                            <?=Yii::t('eff-module-passport/app','forgot_password'); ?>？
+                                            <?=Yii::t('passport/app','forgot_password'); ?>？
                                         </a>
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="<?=\yii\helpers\Url::to(['/passport/register']) ?>">
-                                            <?=Yii::t('eff-module-passport/app','register')?>！
+                                            <?=Yii::t('passport/app','register')?>！
                                         </a>
                                     </div>
                                 </div>

@@ -57,17 +57,17 @@ $this->title = '填写注册码！';
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="<?=\yii\helpers\Url::to(['/passport/password/forgot'])?>">
-                                            <?=Yii::t('eff-module-passport/app','forgot_password'); ?>？
+                                            <?=Yii::t('passport/app','forgot_password'); ?>？
                                         </a>
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="<?=\yii\helpers\Url::to(['/passport/register'])?>">
-                                            <?=Yii::t('eff-module-passport/app','register')?>！
+                                            <?=Yii::t('passport/app','register')?>！
                                         </a>
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="<?=\yii\helpers\Url::to(['/passport/login'])?>">
-                                            <?=Yii::t('eff-module-passport/app','login')?>！
+                                            <?=Yii::t('passport/app','login')?>！
                                         </a>
                                     </div>
                                 </div>

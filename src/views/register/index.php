@@ -2,7 +2,7 @@
 $this->context->layout = 'passport.layout.php';
 ?>
 <?php
-$this->title = \Yii::t('eff-module-passport/app','register');
+$this->title = \Yii::t('passport/app','register');
 ?>
 <div class="bg-gradient-primary h-100">
     <div class="container">
@@ -16,7 +16,7 @@ $this->title = \Yii::t('eff-module-passport/app','register');
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4"><?=Yii::t('eff-module-passport/app','create_an_account');?></h1>
+                                        <h1 class="h4 text-gray-900 mb-4"><?=Yii::t('passport/app','create_an_account');?></h1>
                                     </div>
                                     <?php
                                     use yii\widgets\ActiveForm;
@@ -110,7 +110,7 @@ $this->title = \Yii::t('eff-module-passport/app','register');
                                         ?>
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
-                                        <?=Yii::t('eff-module-passport/app','register');?>
+                                        <?=Yii::t('passport/app','register');?>
                                     </button>
                                     <?php if (!empty($register_form->errors)): ?>
                                         <ul class="form_errors mt-2">
@@ -127,12 +127,12 @@ $this->title = \Yii::t('eff-module-passport/app','register');
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="<?=\yii\helpers\Url::to(['/passport/password/forgot'])?>">
-                                            <?=Yii::t('eff-module-passport/app','forgot_password');?>？
+                                            <?=Yii::t('passport/app','forgot_password');?>？
                                         </a>
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="<?=\yii\helpers\Url::to(['/passport/login'])?>">
-                                            <?=Yii::t('eff-module-passport/app','login');?>！
+                                            <?=Yii::t('passport/app','login');?>！
                                         </a>
                                     </div>
                                 </div>

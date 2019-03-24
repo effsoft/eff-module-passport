@@ -10,6 +10,7 @@ use effsoft\eff\module\passport\models\VerifyForm;
 use effsoft\eff\module\verify\enums\Protocol;
 use effsoft\eff\module\verify\enums\Type;
 use effsoft\eff\module\verify\models\VerifyModel;
+use MongoDB\BSON\Regex;
 use yii\helpers\Url;
 use yii\filters\AccessControl;
 
@@ -53,15 +54,15 @@ class RegisterController extends EffController{
                 ]);
             }
 
-            $user_model = UserModel::findOne(['username' => $register_form->username]);
-            if (!empty($user_model)){
+            $user = UserModel::findOne(['username' => new Regex("^$register_form->username$",'i')]);
+            if (!empty($user)){
                 $register_form->addError('cluster', '该用户名已被占用，请选用其他用户名！');
                 return $this->render('index.php',[
                     'register_form' => $register_form,
                 ]);
             }
-            $user_model = UserModel::findOne(['email' => $register_form->email]);
-            if (!empty($user_model)){
+            $user = UserModel::findOne(['email' => strtolower($register_form->email)]);
+            if (!empty($user)){
                 $register_form->addError('cluster', '该邮箱已被占用，请选用其他邮箱！');
                 return $this->render('index.php',[
                     'register_form' => $register_form,
@@ -69,13 +70,13 @@ class RegisterController extends EffController{
             }
 
             //添加新用户
-            $user_model = new UserModel();
-            $user_model->first_name = $register_form->first_name;
-            $user_model->last_name = $register_form->last_name;
-            $user_model->username = $register_form->username;
-            $user_model->email = $register_form->email;
-            $user_model->password = \Yii::$app->security->generatePasswordHash($register_form->password);
-            if(!$user_model->register()){
+            $user = new UserModel();
+            $user->first_name = $register_form->first_name;
+            $user->last_name = $register_form->last_name;
+            $user->username = $register_form->username;
+            $user->email = strtolower($register_form->email);
+            $user->password = \Yii::$app->security->generatePasswordHash($register_form->password);
+            if(!$user->register()){
                 $register_form->addError('cluster', '无法添加新用户，请稍后重试！');
                 return $this->render('index.php',[
                     'register_form' => $register_form,
@@ -86,9 +87,9 @@ class RegisterController extends EffController{
             $verify_url = $verify->setType(Type::REGISTER)
                 ->setProtocol(Protocol::EMAIL)
                 ->setFrom(\Yii::$app->params['admin_email'])
-                ->setTo($user_model->email)
+                ->setTo($user->email)
                 ->setUrl('/passport/register/verify')
-                ->setData(['uid' => strval($user_model->getPrimaryKey())])
+                ->setData(['uid' => strval($user->getPrimaryKey())])
                 ->setSubject('Get your registration verify code!')
                 ->setView('register')
                 ->send();
@@ -135,15 +136,15 @@ class RegisterController extends EffController{
                     ]);
                 }
 
-                $user_model = UserModel::findOne($verify_data['uid']);
+                $user = UserModel::findOne($verify_data['uid']);
 
                 //更新用户为激活状态
-                $user_model->activated = true;
-                $user_model->updateAttributes(['activated']);
+                $user->activated = true;
+                $user->updateAttributes(['activated']);
 
                 //登录帐号
-                $user_model->password = '';
-                \Yii::$app->user->login($user_model, 3600*24*30);
+                $user->password = '';
+                \Yii::$app->user->login($user, 3600*24*30);
 
                 return $this->goHome();
             }else{
