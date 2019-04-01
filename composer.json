@@ -12,11 +12,7 @@
     "ircmaxell/random-lib": "~1.2.0",
     "hashids/hashids": "~3.0.0",
     "effsoft/eff": "dev-master",
-    "effsoft/eff-asset-jquery": "dev-master",
-    "effsoft/eff-asset-bootstrap-bundle": "dev-master",
-    "effsoft/eff-asset-jquery-easing": "dev-master",
-    "effsoft/eff-asset-magnific-popup": "dev-master",
-    "effsoft/eff-asset-chart-js": "dev-master",
+    
     "effsoft/eff-module-verify": "dev-master"
   },
   "require-dev": {
