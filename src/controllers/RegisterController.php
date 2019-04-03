@@ -103,7 +103,7 @@ class RegisterController extends EffController{
             //跳转至填写注册码的页面
             return \Yii::$app->response->redirect($verify_url);
         }
-        return $this->render('index.php',[
+        return $this->render('//passport/register/index.php',[
             'register_form' => $register_form,
         ]);
     }
@@ -155,7 +155,7 @@ class RegisterController extends EffController{
             }
         }
 
-        return $this->render('verify.php',[
+        return $this->render('//passport/register/verify.php',[
             'verify_form' => $verify_form
         ]);
 

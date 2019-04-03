@@ -96,7 +96,7 @@ class LoginController extends EffController{
             return $this->goHome();
         }
 
-        return $this->render('index.php',[
+        return $this->render('//passport/login/index.php',[
             'login_form' => $login_form,
         ]);
     }
