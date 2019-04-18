@@ -22,7 +22,7 @@ class RegisterController extends EffController{
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index','verify'],
+                        'actions' => ['index','verify','captcha'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -49,7 +49,7 @@ class RegisterController extends EffController{
         if (\Yii::$app->request->isPost){
             $register_form->load(\Yii::$app->request->post());
             if(!$register_form->validate()){
-                return $this->render('index.php',[
+                return $this->render('//passport/register/index',[
                     'register_form' => $register_form,
                 ]);
             }
@@ -57,14 +57,14 @@ class RegisterController extends EffController{
             $user = UserModel::findOne(['username' => new Regex("^$register_form->username$",'i')]);
             if (!empty($user)){
                 $register_form->addError('cluster', '该用户名已被占用，请选用其他用户名！');
-                return $this->render('index.php',[
+                return $this->render('//passport/register/index',[
                     'register_form' => $register_form,
                 ]);
             }
             $user = UserModel::findOne(['email' => strtolower($register_form->email)]);
             if (!empty($user)){
                 $register_form->addError('cluster', '该邮箱已被占用，请选用其他邮箱！');
-                return $this->render('index.php',[
+                return $this->render('//passport/register/index',[
                     'register_form' => $register_form,
                 ]);
             }
@@ -78,7 +78,7 @@ class RegisterController extends EffController{
             $user->password = \Yii::$app->security->generatePasswordHash($register_form->password);
             if(!$user->register()){
                 $register_form->addError('cluster', '无法添加新用户，请稍后重试！');
-                return $this->render('index.php',[
+                return $this->render('//passport/register/index',[
                     'register_form' => $register_form,
                 ]);
             }
@@ -95,7 +95,7 @@ class RegisterController extends EffController{
                 ->send();
             if (empty($verify_url)){
                 $register_form->addError('verify', $verify->getErrorMessage());
-                return $this->render('index.php',[
+                return $this->render('//passport/register/index',[
                     'register_form' => $register_form,
                 ]);
             }
@@ -103,7 +103,7 @@ class RegisterController extends EffController{
             //跳转至填写注册码的页面
             return \Yii::$app->response->redirect($verify_url);
         }
-        return $this->render('//passport/register/index.php',[
+        return $this->render('//passport/register/index',[
             'register_form' => $register_form,
         ]);
     }
@@ -121,7 +121,7 @@ class RegisterController extends EffController{
         if (\Yii::$app->request->isPost){
             $verify_form->load(\Yii::$app->request->post());
             if(!$verify_form->validate()){
-                return $this->render('verify.php',[
+                return $this->render('verify',[
                     'verify_form' => $verify_form
                 ]);
             }
@@ -131,7 +131,7 @@ class RegisterController extends EffController{
 
                 if (empty($verify_data['uid'])){
                     $verify_form->addError('verify','无法获取有效的data，请重新获取激活邮件！');
-                    return $this->render('verify.php',[
+                    return $this->render('verify',[
                         'verify_form' => $verify_form
                     ]);
                 }
@@ -149,13 +149,13 @@ class RegisterController extends EffController{
                 return $this->goHome();
             }else{
                 $verify_form->addError('request','请检查您的注册码！');
-                return $this->render('verify.php',[
+                return $this->render('verify',[
                     'verify_form' => $verify_form
                 ]);
             }
         }
 
-        return $this->render('//passport/register/verify.php',[
+        return $this->render('//passport/register/verify',[
             'verify_form' => $verify_form
         ]);
 
