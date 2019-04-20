@@ -13,9 +13,9 @@ class UserModel extends ActiveRecord implements IdentityInterface {
 
     public function attributes()
     {
-        return ['_id', 'first_name', 'last_name', 'username', 'email',
+        return ['_id', 'username', 'email', 'profile',
             'password', 'access_token', 'auth_key', 'activated', 'blocked',
-            'date_created',
+            'date_created', 'date_updated',
         ];
     }
 
@@ -51,7 +51,7 @@ class UserModel extends ActiveRecord implements IdentityInterface {
     {
         if(parent::beforeSave($insert)){
             if($this->isNewRecord){
-                $this->date_created = time();
+                $this->date_created = $this->date_updated = time();
             }
             return true;
         }
@@ -61,11 +61,7 @@ class UserModel extends ActiveRecord implements IdentityInterface {
     public function register(){
         $this->activated = false;
         $this->blocked = false;
-        if($this->isNewRecord){
-            $this->auth_key = \Yii::$app->getSecurity()->generateRandomString();
-            return $this->insert();
-        }else{
-            return $this->update();
-        }
+        $this->auth_key = \Yii::$app->getSecurity()->generateRandomString();
+        return $this->save();
     }
 }
