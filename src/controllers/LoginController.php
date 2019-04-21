@@ -8,6 +8,7 @@ use effsoft\eff\module\passport\models\UserModel;
 use effsoft\eff\module\verify\enums\Protocol;
 use effsoft\eff\module\verify\enums\Type;
 use effsoft\eff\module\verify\models\VerifyModel;
+use effsoft\eff\module\verify\services\VerifyService;
 use effsoft\eff\module\verify\Verify;
 use effsoft\eff\response\JsonResult;
 use yii\filters\AccessControl;
@@ -51,19 +52,22 @@ class LoginController extends EffController
 
                 $verify_model = VerifyModel::findOne(['to' => $login_form->email]);
                 if (empty($verify_model) || $verify_model->isExpired()) {
+                    if (!$verify_model->delete()) {
+                        return JsonResult::getNewInstance()->setStatus(1002)->setMessage('Server is busy, please try again later!')->getResponse();
+                    }
                     //发送新的验证邮件
-                    $verify = new Verify();
-                    $verify_url = $verify->setType(Type::REGISTER)
+                    $verify_service = new VerifyService();
+                    $verify_url = $verify_service->setType(Type::REGISTER)
                         ->setProtocol(Protocol::EMAIL)
-                        ->setFrom(\Yii::$app->params['admin_email'])
+                        ->setFrom(\Yii::$app->params['system_email'])
                         ->setTo($user->email)
-                        ->setUrl('/passport/register/verify')
+                        ->setUrl('/passport/verify/register')
                         ->setData(['uid' => strval($user->getPrimaryKey())])
                         ->setSubject('Get your registration verify code!')
                         ->setView('register')
                         ->send();
                     if (empty($verify_url)) {
-                        $register_form->addError('verify', $verify->getErrorMessage());
+                        $register_form->addError('verify', $verify_service->getErrorMessage());
                         return JsonResult::getNewInstance()->setStatus(1001)->setMessage($register_form->getErrors())->getResponse();
                     }
                 } else {
@@ -81,7 +85,7 @@ class LoginController extends EffController
             }
 
             \Yii::$app->user->login($user, $login_form->remember ? 3600 * 24 * 30 : 0);
-            return JsonResult::getNewInstance()->setStatus(0)->setMessage(\Yii::$app->getHomeUrl())->getResponse();
+            return JsonResult::getNewInstance()->setStatus(0)->setMessage(Url::to(\Yii::$app->getHomeUrl()))->getResponse();
         }
 
         return $this->render('//passport/login/index', [

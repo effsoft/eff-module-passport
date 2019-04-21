@@ -3,30 +3,35 @@ namespace effsoft\eff\module\passport\models;
 
 class VerifyForm extends \yii\base\Model{
 
-    const SCENARIO_WITH_TOKEN= 'token';
-    const SCENARIO_WITH_OUT_TOKEN = 'without_token';
+    const SCENARIO_REIGSTER= 'register';
+    const SCENARIO_PASSWORD_FORGOTTEN = 'password_forgotten';
 
-    public $email;
     public $code;
+
+    public $password;
+    public $confirm_password;
 
     public function scenarios()
     {
         return [
-            self::SCENARIO_WITH_TOKEN => ['code'],
-            self::SCENARIO_WITH_OUT_TOKEN => ['email', 'code'],
+            self::SCENARIO_REIGSTER => ['code'],
+            self::SCENARIO_PASSWORD_FORGOTTEN => ['code', 'password', 'confirm_password'],
         ];
     }
 
     public function rules(){
         return [
             ['code', 'trim'],
-            ['code', 'required', 'message' => '请填写注册码！'],
-            ['code', 'string', 'min' => 4, 'tooShort' => '注册码长度错误！'],
-            ['code', 'string', 'max' => 4, 'tooLong' => '注册码长度错误！'],
+            ['code', 'required', 'message' => 'Verify code requried!'],
+            ['code', 'string', 'min' => 4, 'tooShort' => "Please check verify code's length!"],
+            ['code', 'string', 'max' => 4, 'tooLong' => "Please check verify code's length!"],
 
-            ['email', 'trim', 'on' => self::SCENARIO_WITH_OUT_TOKEN],
-            ['email', 'required', 'on' => self::SCENARIO_WITH_OUT_TOKEN],
-            ['email', 'email', 'on' => self::SCENARIO_WITH_OUT_TOKEN],
+            ['password', 'required', 'on' => self::SCENARIO_PASSWORD_FORGOTTEN],
+            ['password', 'string', 'min' => 6, 'on' => self::SCENARIO_PASSWORD_FORGOTTEN],
+            ['password', 'string', 'max' => 20, 'on' => self::SCENARIO_PASSWORD_FORGOTTEN],
+            ['confirm_password', 'required', 'on' => self::SCENARIO_PASSWORD_FORGOTTEN],
+            ['confirm_password', 'compare', 'compareAttribute' => 'password', 'skipOnEmpty' => false, 'on' => self::SCENARIO_PASSWORD_FORGOTTEN],
+
         ];
     }
 }
