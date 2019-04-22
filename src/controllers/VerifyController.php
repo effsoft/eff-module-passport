@@ -59,7 +59,7 @@ class VerifyController extends EffController{
                 $user_model->updateAttributes(['activated']);
                 \Yii::$app->user->login($user_model, 3600 * 24 * 30);
 
-                return JsonResult::getNewInstance()->setStatus(0)->setMessage(\Yii::$app->getHomeUrl())->getResponse();
+                return JsonResult::getNewInstance()->setStatus(0)->setMessage(Url::to(\Yii::$app->getHomeUrl()))->getResponse();
             }
         }
 
