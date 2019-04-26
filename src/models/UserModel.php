@@ -15,7 +15,7 @@ class UserModel extends ActiveRecord implements IdentityInterface {
     {
         return ['_id', 'username', 'email', 'profile',
             'password', 'access_token', 'auth_key', 'activated', 'blocked',
-            'date_created', 'date_updated',
+            'date_created', 'date_updated', 'role',
         ];
     }
 

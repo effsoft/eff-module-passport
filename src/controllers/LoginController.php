@@ -18,6 +18,25 @@ use yii\web\Response;
 class LoginController extends EffController
 {
 
+    public function actions()
+    {
+        return [
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'successCallback'],
+            ],
+        ];
+    }
+
+    public function successCallback($client)
+    {
+
+        $attibutes = $client->getUserAttributes();
+        var_dump($attributes);
+        exit;
+
+    }
+
     function actionIndex()
     {
 
@@ -84,6 +103,8 @@ class LoginController extends EffController
                 return JsonResult::getNewInstance()->setStatus(106)->setMessage($login_form->getErrors())->getResponse();
             }
 
+            $user->date_updated = time();
+            $user->updateAttributes(['date_updated']);
             \Yii::$app->user->login($user, $login_form->remember ? 3600 * 24 * 30 : 0);
             return JsonResult::getNewInstance()->setStatus(0)->setMessage(Url::to(\Yii::$app->getHomeUrl()))->getResponse();
         }
