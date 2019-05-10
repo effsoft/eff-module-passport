@@ -1,19 +1,25 @@
 <?php
 namespace effsoft\eff\module\passport\models;
 
+use effsoft\eff\EffMysqlActiveRecord;
 use yii\mongodb\ActiveRecord;
 use yii\web\IdentityInterface;
 
-class UserModel extends ActiveRecord implements IdentityInterface {
+class UserModel extends EffMysqlActiveRecord implements IdentityInterface {
 
-    public static function collectionName()
+//    public static function collectionName()
+//    {
+//        return 'User';
+//    }
+
+    public static function tableName()
     {
-        return 'User';
+        return 'user';
     }
 
     public function attributes()
     {
-        return ['_id', 'username', 'email', 'profile',
+        return ['id', 'username', 'email', 'profile',
             'password', 'access_token', 'auth_key', 'activated', 'blocked',
             'date_created', 'date_updated', 'role',
         ];
@@ -21,9 +27,9 @@ class UserModel extends ActiveRecord implements IdentityInterface {
 
     public static function findIdentity($id)
     {
-        if ($id === (array) $id && isset($id['$oid'])){
-            $id = $id['$oid'];
-        }
+//        if ($id === (array) $id && isset($id['$oid'])){
+//            $id = $id['$oid'];
+//        }
         return static::findOne($id);
     }
 
@@ -34,7 +40,8 @@ class UserModel extends ActiveRecord implements IdentityInterface {
 
     public function getId()
     {
-        return ($this->_id);
+//        return ($this->_id);
+        return $this->id;
     }
 
     public function getAuthKey()
